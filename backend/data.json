@@ -1,0 +1,39 @@
+{
+  "products": [
+    {
+      "id": "earthneer-500ml",
+      "name": "EarthNeer 500 ml",
+      "size": "500 ml",
+      "description": "Compact and convenient packaged drinking water bottle designed for personal use and on-the-go hydration.",
+      "use_cases": [
+        "Students",
+        "Travellers",
+        "Events",
+        "On-the-go use"
+      ]
+    },
+    {
+      "id": "earthneer-1litre",
+      "name": "EarthNeer 1 Litre",
+      "size": "1 Litre",
+      "description": "Larger packaged drinking water bottle ideal for sharing, workspace hydration, and daily household needs.",
+      "use_cases": [
+        "Households",
+        "Offices",
+        "Institutions",
+        "Retail"
+      ]
+    }
+  ],
+  "enquiries": [
+    {
+      "id": "10293806-4d63-4934-a2e4-333673988c08",
+      "name": "dwjfijge0jn",
+      "phone": "9523588483",
+      "email": "hghfhfgj920@gmail.com",
+      "customer_type": "Institution",
+      "message": "testing connection",
+      "created_at": "2026-08-25T05:15:31.846374"
+    }
+  ]
+}
