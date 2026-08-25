@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
-// API base URL from environment variable or default to localhost
-const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000'
+// API base URL from environment variable or default to same domain
+const API_URL = import.meta.env.VITE_API_URL || ''
 
 function App() {
   const [products, setProducts] = useState([])
@@ -55,11 +55,11 @@ function App() {
 
   const validateForm = () => {
     const errors = {}
-    
+
     if (!formData.name.trim()) {
       errors.name = 'Name is required'
     }
-    
+
     if (!formData.phone.trim()) {
       errors.phone = 'Phone is required'
     } else {
@@ -68,34 +68,33 @@ function App() {
         errors.phone = 'Please enter a valid phone number'
       }
     }
-    
+
     if (!formData.email.trim()) {
       errors.email = 'Email is required'
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       errors.email = 'Please enter a valid email address'
     }
-    
+
     if (!formData.customer_type) {
       errors.customer_type = 'Customer type is required'
     }
-    
+
     if (!formData.message.trim()) {
       errors.message = 'Message is required'
     }
-    
+
     return errors
   }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({
-      ...prev,
+     ...prev,
       [name]: value
     }))
-    // Clear error for this field
     if (formErrors[name]) {
       setFormErrors(prev => ({
-        ...prev,
+       ...prev,
         [name]: ''
       }))
     }
@@ -103,18 +102,18 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     const errors = validateForm()
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors)
       setFormSuccess('')
       return
     }
-    
+
     setFormSubmitting(true)
     setFormErrors({})
     setFormSuccess('')
-    
+
     try {
       const response = await fetch(`${API_URL}/api/enquiries`, {
         method: 'POST',
@@ -123,9 +122,9 @@ function App() {
         },
         body: JSON.stringify(formData)
       })
-      
+
       const data = await response.json()
-      
+
       if (data.success) {
         setFormSuccess('Thank you. Your enquiry has been submitted.')
         setFormData({
@@ -135,7 +134,6 @@ function App() {
           customer_type: 'Household',
           message: ''
         })
-        // Refresh dashboard after new enquiry
         fetchDashboard()
       } else {
         if (data.errors) {
@@ -168,7 +166,6 @@ function App() {
 
   return (
     <div className="app">
-      {/* Navigation */}
       <nav className="navbar">
         <div className="nav-container">
           <div className="nav-logo">
@@ -185,7 +182,6 @@ function App() {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section className="hero">
         <div className="hero-content">
           <div className="hero-badge">PROPOSED VENTURE</div>
@@ -220,34 +216,32 @@ function App() {
         </div>
       </section>
 
-      {/* Vision Section */}
       <section id="vision" className="section vision-section">
         <div className="section-container">
           <h2 className="section-title">Our Vision</h2>
           <p className="section-subtitle">Clean water, responsibly delivered</p>
           <div className="vision-content">
             <p>
-              EarthNeer is a proposed initiative to bring pure, safe packaged drinking water 
+              EarthNeer is a proposed initiative to bring pure, safe packaged drinking water
               to Chandwa, Jharkhand, while building a sustainable and responsible enterprise.
             </p>
             <p>
-              Our vision combines modern purification technology with a commitment to 
-              environmental responsibility, creating value for customers, communities, 
+              Our vision combines modern purification technology with a commitment to
+              environmental responsibility, creating value for customers, communities,
               and the planet.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Products Section */}
       <section id="products" className="section products-section">
         <div className="section-container">
           <h2 className="section-title">Proposed Products</h2>
           <p className="section-subtitle">Designed for everyday hydration needs</p>
-          
-          {loadingProducts ? (
+
+          {loadingProducts? (
             <div className="loading">Loading products...</div>
-          ) : products.length === 0 ? (
+          ) : products.length === 0? (
             <div className="empty-state">No products available.</div>
           ) : (
             <div className="products-grid">
@@ -255,7 +249,7 @@ function App() {
                 <div key={product.id} className="product-card">
                   <div className="product-badge">PROPOSED PRODUCT</div>
                   <div className="product-icon">
-                    {product.size === '500 ml' ? '💧' : '🚰'}
+                    {product.size === '500 ml'? '💧' : '🚰'}
                   </div>
                   <h3 className="product-name">{product.name}</h3>
                   <p className="product-description">{product.description}</p>
@@ -274,12 +268,11 @@ function App() {
         </div>
       </section>
 
-      {/* Process Section */}
       <section id="process" className="section process-section">
         <div className="section-container">
           <h2 className="section-title">How It Works</h2>
           <p className="section-subtitle">PROPOSED OPERATIONAL WORKFLOW</p>
-          
+
           <div className="process-steps">
             <div className="process-step">
               <div className="step-number">01</div>
@@ -302,12 +295,11 @@ function App() {
         </div>
       </section>
 
-      {/* Facility Section */}
       <section id="facility" className="section facility-section">
         <div className="section-container">
           <h2 className="section-title">Proposed Facility</h2>
           <p className="section-subtitle">PROPOSED FACILITY CONCEPT</p>
-          
+
           <div className="facility-stats">
             <div className="facility-stat">
               <div className="stat-value">5,000 sq. ft.</div>
@@ -318,7 +310,7 @@ function App() {
               <div className="stat-label">Initial planned investment</div>
             </div>
           </div>
-          
+
           <div className="facility-workflow">
             <h3>AUTOMATED WORKFLOW</h3>
             <div className="workflow-chain">
@@ -333,7 +325,7 @@ function App() {
               <span>Packaging</span>
             </div>
           </div>
-          
+
           <div className="facility-areas">
             <h3>Potential proposed operational areas:</h3>
             <div className="areas-list">
@@ -349,12 +341,11 @@ function App() {
         </div>
       </section>
 
-      {/* Target Market Section */}
       <section id="market" className="section market-section">
         <div className="section-container">
           <h2 className="section-title">Target Market</h2>
           <p className="section-subtitle">Serving both consumers and businesses</p>
-          
+
           <div className="market-segments">
             <div className="market-card">
               <h3 className="market-card-title">B2C</h3>
@@ -377,12 +368,11 @@ function App() {
         </div>
       </section>
 
-      {/* Business Model Section */}
       <section id="business" className="section business-section">
         <div className="section-container">
           <h2 className="section-title">Proposed Business Model</h2>
           <p className="section-subtitle">Revenue channels under consideration</p>
-          
+
           <div className="business-channels">
             <div className="channel-item">
               <span className="channel-number">1</span>
@@ -409,12 +399,11 @@ function App() {
         </div>
       </section>
 
-      {/* Sustainability Section */}
       <section id="sustainability" className="section sustainability-section">
         <div className="section-container">
           <h2 className="section-title">Sustainability Goals</h2>
           <p className="section-subtitle">Proposed future sustainability commitments</p>
-          
+
           <div className="sustainability-pillars">
             <div className="pillar">
               <div className="pillar-icon">💧</div>
@@ -440,12 +429,11 @@ function App() {
         </div>
       </section>
 
-      {/* Roadmap Section */}
       <section id="roadmap" className="section roadmap-section">
         <div className="section-container">
           <h2 className="section-title">Future Growth</h2>
           <p className="section-subtitle">PROPOSED FUTURE ROADMAP</p>
-          
+
           <div className="roadmap">
             <div className="roadmap-phase">
               <div className="phase-badge">PHASE 1</div>
@@ -470,12 +458,11 @@ function App() {
         </div>
       </section>
 
-      {/* Contact/Enquiry Section */}
       <section id="contact" className="section contact-section">
         <div className="section-container">
           <h2 className="section-title">Contact / Enquiry</h2>
           <p className="section-subtitle">We'd love to hear from you</p>
-          
+
           <form onSubmit={handleSubmit} className="enquiry-form">
             {formErrors.general && (
               <div className="error-message general-error">{formErrors.general}</div>
@@ -483,7 +470,7 @@ function App() {
             {formSuccess && (
               <div className="success-message">{formSuccess}</div>
             )}
-            
+
             <div className="form-group">
               <label htmlFor="name">Name *</label>
               <input
@@ -496,7 +483,7 @@ function App() {
               />
               {formErrors.name && <span className="field-error">{formErrors.name}</span>}
             </div>
-            
+
             <div className="form-row">
               <div className="form-group">
                 <label htmlFor="phone">Phone *</label>
@@ -510,7 +497,7 @@ function App() {
                 />
                 {formErrors.phone && <span className="field-error">{formErrors.phone}</span>}
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="email">Email *</label>
                 <input
@@ -524,7 +511,7 @@ function App() {
                 {formErrors.email && <span className="field-error">{formErrors.email}</span>}
               </div>
             </div>
-            
+
             <div className="form-group">
               <label htmlFor="customer_type">Customer Type *</label>
               <select
@@ -543,7 +530,7 @@ function App() {
               </select>
               {formErrors.customer_type && <span className="field-error">{formErrors.customer_type}</span>}
             </div>
-            
+
             <div className="form-group">
               <label htmlFor="message">Message *</label>
               <textarea
@@ -556,23 +543,22 @@ function App() {
               />
               {formErrors.message && <span className="field-error">{formErrors.message}</span>}
             </div>
-            
+
             <button type="submit" className="btn btn-primary submit-btn" disabled={formSubmitting}>
-              {formSubmitting ? 'Submitting...' : 'Submit Enquiry'}
+              {formSubmitting? 'Submitting...' : 'Submit Enquiry'}
             </button>
           </form>
         </div>
       </section>
 
-      {/* Dashboard Section */}
       <section id="dashboard" className="section dashboard-section">
         <div className="section-container">
           <h2 className="section-title">Prototype Dashboard</h2>
           <p className="section-subtitle">For demonstration purposes only — not real business data</p>
-          
-          {loadingDashboard ? (
+
+          {loadingDashboard? (
             <div className="loading">Loading dashboard...</div>
-          ) : dashboard ? (
+          ) : dashboard? (
             <div className="dashboard-content">
               <div className="dashboard-stats">
                 <div className="dash-stat">
@@ -584,11 +570,11 @@ function App() {
                   <div className="dash-stat-label">Total Products</div>
                 </div>
               </div>
-              
+
               <div className="dashboard-details">
                 <div className="customer-counts">
                   <h3>Customer Enquiry Count</h3>
-                  {Object.keys(dashboard.customer_type_counts).length > 0 ? (
+                  {Object.keys(dashboard.customer_type_counts).length > 0? (
                     <div className="counts-list">
                       {Object.entries(dashboard.customer_type_counts).map(([type, count]) => (
                         <div key={type} className="count-item">
@@ -601,10 +587,10 @@ function App() {
                     <p className="empty-state">No enquiries yet.</p>
                   )}
                 </div>
-                
+
                 <div className="recent-enquiries">
                   <h3>Recent Enquiries</h3>
-                  {dashboard.recent_enquiries.length > 0 ? (
+                  {dashboard.recent_enquiries.length > 0? (
                     <div className="enquiries-list">
                       {dashboard.recent_enquiries.map(enquiry => (
                         <div key={enquiry.id} className="enquiry-item">
@@ -634,7 +620,6 @@ function App() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="footer">
         <div className="footer-container">
           <div className="footer-logo">
